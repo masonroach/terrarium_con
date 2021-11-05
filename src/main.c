@@ -10,7 +10,7 @@
 #include "uart.hpp"
 #include "stm32wb_nucleo_bsp.h"
 
-int cpu1_main(void) {
+int main(void) {
 
 	// Enable GPIO clocks
 	RCC_GPIOB_ENABLE();

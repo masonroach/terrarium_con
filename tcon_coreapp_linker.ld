@@ -1,8 +1,8 @@
 /*!
- * \brief Linker script for the STM32L412 family.
+ * \brief Linker script for the STM32WB30.
  */
 
-INCLUDE "stm32wb55rg_memorymap.ld"
+INCLUDE "stm32wb30_memorymap.ld"
 
 ENTRY(__reset_handler)
 
