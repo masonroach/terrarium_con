@@ -38,17 +38,7 @@ SRCDIR    := src
 INCDIR    := inc
 OBJDIR    := obj
 LIBDIR    := lib
-COREDIR   := core
 TARGETDIR := bin
-
-# Get info from packages
-LIBMAKES := $(shell find $(LIBDIR)/*/Makefile)
-$(foreach SUBLIB, $(LIBMAKES), $(eval include $(SUBLIB)))
-
-# Define vpaths
-vpath %.c $(SRCDIR) $(COREDIR)/src
-vpath %.cpp $(SRCDIR) $(COREDIR)/src
-vpath %.o $(OBJDIR)
 
 # Define target
 TARGET = $(TARGETDIR)/main
@@ -56,15 +46,29 @@ TARGET = $(TARGETDIR)/main
 # Find all source files and declare objects
 SRC := $(shell find $(SRCDIR) -name [^.]*.c)
 SRC += $(shell find $(SRCDIR) -name [^.]*.cpp)
+
+# Define linker
+LINKER = tcon_coreapp_linker.ld
+
+# Define include paths
+INCLUDES := $(INCDIR)
+INCFLAGS := $(addprefix -I, $(INCLUDES))
+
+# Get info from packages
+LIBMAKES := $(shell find $(LIBDIR)/*/Makefile)
+$(foreach SUBMAKE, $(LIBMAKES), $(eval include $(SUBMAKE)))
+
+# Define vpaths
+vpath %.c $(SRCDIR) $(COREDIR)/src
+vpath %.cpp $(SRCDIR) $(COREDIR)/src
+vpath %.s $(SRCDIR) $(COREDIR)/src
+vpath %.o $(OBJDIR)
+
+# Generate objects
 OBJ := $(addprefix $(OBJDIR)/,$(notdir $(SRC)))
 OBJ := $(OBJ:.c=.o)
 OBJ := $(OBJ:.cpp=.o)
-
-LINKER = $(COREDIR)/tcon_coreapp_linker.ld
-
-# Define include paths
-INCLUDES := $(INCDIR) $(COREDIR)/inc
-INCFLAGS := $(addprefix -I, $(INCLUDES))
+OBJ := $(OBJ:.s=.o)
 
 # Linker flags
 LDFLAGS = -Wl,-T,$(LINKER),-Map=$(TARGET).map,--cref
@@ -72,7 +76,7 @@ LDFLAGS = -Wl,-T,$(LINKER),-Map=$(TARGET).map,--cref
 # C compiler flags
 CFLAGS = $(O_LEVEL) $(INCFLAGS) -Wall -nostartfiles -lnosys -g3 $(LDFLAGS) \
 	-mcpu=cortex-m4 --specs=nosys.specs -nodefaultlibs -nostdlib \
-	-mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wextra
+	-mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb
 
 # C++ compiler flags
 CPPFLAGS = $(CFLAGS) -fno-exceptions
@@ -96,7 +100,7 @@ $(TARGET).hex: $(TARGET).elf
 # Compile executable
 $(TARGET).elf: $(OBJ)
 	@mkdir -p $(@D)
-	$(CPP) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 # Compile c objects rule
 $(OBJDIR)/%.o: %.c

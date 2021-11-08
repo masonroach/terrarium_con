@@ -2,7 +2,7 @@
  * \brief Linker script for the STM32WB30.
  */
 
-INCLUDE "stm32wb30_memorymap.ld"
+INCLUDE "tcon_memorymap.ld"
 
 ENTRY(__reset_handler)
 
@@ -23,7 +23,7 @@ SECTIONS
 		. = ALIGN(4);
 		KEEP(*(.interrupt_vector))
 		. = ALIGN(4);
-	} > FLASH
+	} > APP_FLASH
 
 	.text :
 	{
@@ -39,7 +39,7 @@ SECTIONS
 		*(.rodata*)
 		. = ALIGN(4);
 		_etext = . ;
-	} > FLASH
+	} > APP_FLASH
 
 	.data :
 	{
@@ -48,7 +48,7 @@ SECTIONS
 		*(.data)
 		*(.data*)
 		_edata = . ;
-	} > RAM AT > FLASH
+	} > RAM AT > APP_FLASH
 
 	.bss :
 	{
