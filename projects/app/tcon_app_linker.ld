@@ -2,7 +2,7 @@
  * \brief Linker script for the STM32WB30.
  */
 
-INCLUDE "tcon_memorymap.ld"
+INCLUDE "../common/tcon_memorymap.ld"
 
 ENTRY(__reset_handler)
 

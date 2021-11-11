@@ -5,9 +5,7 @@
  * \date November 7, 2021
  */
 #include <stdint.h>
-#if defined __GNUC__
-#include "cmsis_gcc.h"
-#endif
+#include "cmsis_compiler.h"
 
 // External variables from linker script
 extern uint32_t _sdata;
