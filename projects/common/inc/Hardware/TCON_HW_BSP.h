@@ -1,17 +1,21 @@
 /*!
- * \file stm32wb_nucleo_bsp.hpp
- * \brief Board specific definitions for the STM32WB NUCLEO
- * \author Mason Roach
- * \date May 16, 2021
+ * \brief
  */
-
-#ifndef __STM32WB_NUCLEO_BSP_H
-#define __STM32WB_NUCLEO_BSP_H
+#ifndef TCON_HW_BSP_H
+#define TCON_HW_BSP_H
 // =============================================================================
 // Defines
 // =============================================================================
-#include "stm32wb.hpp"
-#include "gpio.hpp"
+#include "stm32wbxx_hal.h"
+
+#define USER_LED_1_PIN  GPIO_PIN_5
+#define USER_LED_1_PORT GPIOB
+#define USER_LED_2_PIN  GPIO_PIN_6
+#define USER_LED_2_PORT GPIOB
+#define USER_LED_3_PIN  GPIO_PIN_7
+#define USER_LED_4_PORT GPIOB
+#define USER_LED_4_PIN  GPIO_PIN_2
+#define USER_LED_4_PORT GPIOB
 
 // LIGHT_INT PA0
 // SPI_SCK PA1
@@ -31,43 +35,9 @@
 // LCD_NBUSY PE4
 // LCD_DAT_CMD PB0
 // LCD_NRST PB1
-// USER_LED_4 PB2
 // SWD_SWO PB3
 // SWD_NRST PB4
-// USER_LED_1 PB5
-// USER_LED_2 PB6
-// USER_LED_3 PB7
 // I2C_SCL PB8
 // I2C_SDA PB9
 
-#define LED1_PIN (5)
-#define LED1_PORT (GPIOB)
-
-#define LED2_PIN (0)
-#define LED2_PORT (GPIOB)
-
-#define LED3_PIN (1)
-#define LED3_PORT (GPIOB)
-
-#define SW1_PIN (0)
-#define SW1_PORT (GPIOB)
-
-#define SW2_PIN (0)
-#define SW2_PORT (GPIOD)
-
-#define SW3_PIN (1)
-#define SW3_PORT (GPIOD)
-
-#define USB_N_PIN (11)
-#define USB_N_PORT (GPIOA)
-#define USB_P_PIN (12)
-#define USB_P_PORT (GPIOA)
-
-#define DEBUG_UART_PERIPH (USART1)
-#define DEBUG_UART_RX_PIN (3)
-#define DEBUG_UART_RX_PORT (GPIOA)
-#define DEBUG_UART_TX_PIN (2)
-#define DEBUG_UART_TX_PORT (GPIOA)
-
 #endif
-

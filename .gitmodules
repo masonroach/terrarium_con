@@ -1,3 +1,6 @@
 [submodule "lib/stm32wb_hal"]
 	path = lib/stm32wb_hal
 	url = git@github.com:masonroach/stm32wb_hal.git
+[submodule "lib/freertos"]
+	path = lib/freertos
+	url = git@github.com:masonroach/freertos.git
