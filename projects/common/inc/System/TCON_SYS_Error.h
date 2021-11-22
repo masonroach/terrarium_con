@@ -6,6 +6,6 @@
 
 typedef enum {
     ERR_NONE = 0,
-} Sys_Err_t
+} Sys_Err_t;
 
 #endif
