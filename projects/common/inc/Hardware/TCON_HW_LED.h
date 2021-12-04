@@ -8,5 +8,6 @@
 #include "TCON_SYS_Error.h"
 
 Sys_Err_t HW_LED_Init(void);
+Sys_Err_t HW_LED_Set(uint8_t led, uint8_t enable);
 
 #endif

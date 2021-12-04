@@ -8,14 +8,14 @@
 // =============================================================================
 #include "stm32wbxx_hal.h"
 
-#define USER_LED_1_PIN  GPIO_PIN_5
-#define USER_LED_1_PORT GPIOB
-#define USER_LED_2_PIN  GPIO_PIN_6
-#define USER_LED_2_PORT GPIOB
-#define USER_LED_3_PIN  GPIO_PIN_7
-#define USER_LED_4_PORT GPIOB
-#define USER_LED_4_PIN  GPIO_PIN_2
-#define USER_LED_4_PORT GPIOB
+#define USER_LED_1_PIN  (GPIO_PIN_5)
+#define USER_LED_1_PORT (GPIOB)
+#define USER_LED_2_PIN  (GPIO_PIN_6)
+#define USER_LED_2_PORT (GPIOB)
+#define USER_LED_3_PIN  (GPIO_PIN_7)
+#define USER_LED_3_PORT (GPIOB)
+#define USER_LED_4_PIN  (GPIO_PIN_2)
+#define USER_LED_4_PORT (GPIOB)
 
 // LIGHT_INT PA0
 // SPI_SCK PA1
@@ -39,5 +39,8 @@
 // SWD_NRST PB4
 // I2C_SCL PB8
 // I2C_SDA PB9
+
+// Useful macros
+
 
 #endif

@@ -21,7 +21,7 @@
 PREFIX = arm-none-eabi
 CC = $(PREFIX)-gcc
 CPP = $(PREFIX)-g++
-LD = $(PREFIX)-ld
+LD = $(PREFIX)-gcc
 AS = $(PREFIX)-as
 CP = $(PREFIX)-objcopy
 OD = $(PREFIX)-objdump
@@ -76,18 +76,19 @@ OBJ := $(OBJ:.cpp=.o)
 OBJ := $(OBJ:.s=.o)
 
 # Linker flags
-LDFLAGS = -Wl,-T,$(LINKER),-Map=$(TARGET).map,--cref
+LDFLAGS = -Wl,-T$(LINKER),-Map=$(TARGET).map
+
+# Target processor
+PROCESSOR = STM32WB30xx
 
 # C compiler flags
-CFLAGS = $(O_LEVEL) $(INCFLAGS) -Wall -nostartfiles -lnosys -g3 $(LDFLAGS) \
-	-mcpu=cortex-m4 --specs=nosys.specs -nodefaultlibs -nostdlib \
-	-mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb
+CFLAGS = $(O_LEVEL) $(INCFLAGS) -Wall -nostartfiles -lnosys -g3 -std=gnu11 \
+	-mcpu=cortex-m4 --specs=nosys.specs -lgcc -D$(PROCESSOR) -DUSE_HAL_DRIVER \
+	-mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -ffreestanding -fno-builtin \
+	-ffunction-sections -fdata-sections
 
 # C++ compiler flags
 CPPFLAGS = $(CFLAGS) -fno-exceptions
-
-# Flashing options
-FLASH_ADDR := "0x08000000"
 
 # ==============================================================================
 # Targets
@@ -109,7 +110,7 @@ $(TARGET).hex: $(TARGET).elf
 # Compile executable
 $(TARGET).elf: $(OBJ)
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 # Compile c objects rule
 $(OBJDIR)/%.o: %.c

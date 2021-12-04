@@ -8,7 +8,7 @@ ENTRY(__reset_handler)
 
 STACK_SIZE = 0x2000; /* 8kB */
 
-_estack = (ORIGIN (RAM) + STACK_SIZE);
+_estack = (ORIGIN (RAM) + LENGTH(RAM));
 
 SECTIONS
 {
@@ -67,6 +67,10 @@ SECTIONS
 	} > RAM
 
 	_end = . ;
+
+	.ARM.attributes 0 : { *(.ARM.attributes) }
+	MB_MEM1 (NOLOAD)  : { *(MB_MEM1) } >RAM_SHARED
+	MB_MEM2 (NOLOAD)  : { _smb_mem2 = . ; *(MB_MEM1) ; _emb_mem2 = . ; } >RAM_SHARED
 
 }
 

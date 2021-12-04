@@ -8,12 +8,12 @@
 #include "cmsis_compiler.h"
 
 // External variables from linker script
-extern uint32_t _sdata;
-extern uint32_t _etext;
-extern uint32_t _edata;
-extern uint32_t _sbss;
-extern uint32_t _ebss;
-extern uint32_t _estack;
+extern uint32_t _sdata[];
+extern uint32_t _etext[];
+extern uint32_t _edata[];
+extern uint32_t _sbss[];
+extern uint32_t _ebss[];
+extern uint32_t _estack[];
 
 // External functions
 extern int main(void);
@@ -31,23 +31,22 @@ void __reset_handler(void) {
 	uint32_t *dest, *src;
 
 	// Set stack pointer
-	__set_MSP(_estack);
-
-	// Initialize base system
-	SystemInit();
+	__set_MSP((uint32_t)_estack);
 
 	// Copy data from flash to RAM
-	dest = &_sdata;
-	src = &_etext;
-	while (dest < &_edata) {
+	dest = (uint32_t *)_sdata;
+	src = (uint32_t *)_etext;
+	while (dest < (uint32_t *)_edata) {
 	
-		*dest++ = *src++;
+		*dest = *src;
+		dest++;
+		src++;
 
 	}
 
 	// 0 initialize bss data
-	dest = &_sbss;
-	while (dest < &_ebss) {
+	dest = (uint32_t *)_sbss;
+	while (dest < (uint32_t *)_ebss) {
 		
 		*dest++ = 0;
 
@@ -55,11 +54,16 @@ void __reset_handler(void) {
 
 	// 0 initialize MEM2 area
 	
+	// Initialize base system
+	SystemInit();
+
 	// Set stack again before jumping to main code
-	__set_MSP(_estack);
+	__set_MSP((uint32_t)_estack);
 
 	// Jump to main code
 	main();
+
+	while (1);
 
 }
 
