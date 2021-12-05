@@ -106,7 +106,7 @@ void __attribute__((weak)) UsageFault_Handler(void) {
 
 }
 
-void __attribute__((weak)) SVCall_Handler(void) {
+void __attribute__((weak)) SVC_Handler(void) {
 
 }
 
@@ -181,7 +181,7 @@ void (* const _interrupt_vector[])(void) = {
 	[__ISR_IDX(0x0020)] = 0,
 	[__ISR_IDX(0x0024)] = 0,
 	[__ISR_IDX(0x0028)] = 0,
-	[__ISR_IDX(0x002C)] = SVCall_Handler,
+	[__ISR_IDX(0x002C)] = SVC_Handler,
 	[__ISR_IDX(0x0030)] = Debug_Handler,
 	[__ISR_IDX(0x0034)] = 0,
 	[__ISR_IDX(0x0038)] = PendSV_Handler,

@@ -7,19 +7,27 @@
 #include "TCON_HW_CLK.h"
 #include "TCON_HW_LED.h"
 
+#include "TCON_APP_LED.h"
+#include "TCON_APP_ThreadControl.h"
+
+#include "FreeRTOS.h"
+#include "task.h"
+
 int main(void) {
 
-	HAL_Init();
+    HAL_Init();
 
-	HW_CLK_Init();
+    HW_CLK_Init();
+    HW_LED_Init();
 
-	HW_LED_Init();
-	HW_LED_Set(1, 1);
-	HW_LED_Set(2, 1);
-	HW_LED_Set(3, 1);
-	HW_LED_Set(4, 1);
+    THD_LED_Init();
 
-	while (1);
+    HW_LED_Set(4, 1);
+
+    SYS_ThreadControl_StartScheduler();
+
+    HW_LED_Set(3, 1);
+    while (1);
 
 }
 
